@@ -59,6 +59,10 @@ spring:
 #                # 允许在一秒钟内完成的最大请求数
 #                redis-rate-limiter.burstCapacity: 20
 #            - StripPrefix=1
+        - id: ${mynacos.service.service3}
+          uri: lb://${mynacos.service.service3}
+          predicates:
+              - Path=/${mynacos.service.service3}/**
 management:
   endpoints:
     web:
@@ -70,3 +74,4 @@ mynacos:
   service:
     service1: minio-service
     service2: feign-customers-zz
+    service3: education-provider
