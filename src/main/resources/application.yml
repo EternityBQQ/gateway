@@ -1,0 +1,72 @@
+server:
+  # 端口号
+  port: 8001
+spring:
+  application:
+    # 服务名称
+    name: nacos-getway-server
+  cloud:
+    nacos:
+      discovery:
+        # 注册中心地址
+        server-addr: 139.9.205.89:8848
+#    gateway:
+#      discovery:
+#        locator:
+#          # 允许网关地址访问发现
+#          enabled: true
+#          # 路由地址统一转换为小写
+#          lower-case-service-id: true
+#      routes:
+#        # 服务ID
+#        - id: education-provider
+#          # lb表示注册中心地址
+#          uri: lb://education-provider
+#          # 断言
+#          predicates:
+#            # /**表示该服务下所有接口
+#            - Path=/**
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: ${mynacos.service.service1}
+          uri: lb://${mynacos.service.service1}
+          predicates:
+            - Path=/${mynacos.service.service1}/**
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+#                # 使用SpEL按名称引用bean
+#                #key-resolver: '#{@remoteAddrKeyResolver}'
+#                # 允许用户每秒处理多少个请求
+#                redis-rate-limiter.replenishRate: 10
+#                # 允许在一秒钟内完成的最大请求数
+#                redis-rate-limiter.burstCapacity: 20
+#            - StripPrefix=1
+        - id: ${mynacos.service.service2}
+          uri: lb://${mynacos.service.service2}
+          predicates:
+            - Path=/${mynacos.service.service2}/**
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+#                # 使用SpEL按名称引用bean
+#                #key-resolver: '#{@remoteAddrKeyResolver}'
+#                # 允许用户每秒处理多少个请求
+#                redis-rate-limiter.replenishRate: 10
+#                # 允许在一秒钟内完成的最大请求数
+#                redis-rate-limiter.burstCapacity: 20
+#            - StripPrefix=1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# 需要配置的服务名
+mynacos:
+  service:
+    service1: minio-service
+    service2: feign-customers-zz
