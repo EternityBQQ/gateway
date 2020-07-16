@@ -10,7 +10,8 @@ spring:
       discovery:
         # 注册中心地址
         server-addr: 139.9.205.89:8848
-#    gateway:
+        namespace: 2db4af37-1555-4693-b6d2-6a610711d2a2
+    #    gateway:
 #      discovery:
 #        locator:
 #          # 允许网关地址访问发现
