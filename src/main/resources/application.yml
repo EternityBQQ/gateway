@@ -74,5 +74,5 @@ management:
 mynacos:
   service:
     service1: minio-service
-    service2: feign-customers-zz
+    service2: feign-customers
     service3: education-provider
